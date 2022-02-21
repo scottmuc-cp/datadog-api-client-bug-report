@@ -10,9 +10,16 @@ import com.datadog.api.v1.client.model.EventPriority;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.glassfish.jersey.client.JerseyClientBuilder;
+import javax.ws.rs.client.Client;
+
 public class DataDogExample {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
+
+        JerseyClientBuilder builder = new JerseyClientBuilder().withConfig(defaultClient.getClientConfig());
+        Client client = builder.build();
+        defaultClient.setHttpClient(client);
 
         HashMap<String, String> serverVariables = new HashMap<>();
         serverVariables.put("site", "datadoghq.eu");
